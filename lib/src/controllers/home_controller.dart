@@ -26,7 +26,7 @@ class HomeController extends GetxController {
       );
       // setState(() {
       Playingbutton = true;
-      update(['PLAY_BTN']);
+      update(['MUSIC_PLAYER']);
       // });
     } else {
       var r = await audioplayer.pause();
@@ -34,7 +34,7 @@ class HomeController extends GetxController {
       // Get.snackbar("Playing paused", "");
       // setState(() {
       Playingbutton = false;
-      update(['PLAY_BTN']);
+      update(['MUSIC_PLAYER']);
 
       // });
     }
@@ -63,7 +63,7 @@ class HomeController extends GetxController {
 
     // setState(() {
     Playingbutton = true;
-    update(['PLAY_BTN']);
+    update(['MUSIC_PLAYER']);
     // });
   }
 
@@ -90,7 +90,7 @@ class HomeController extends GetxController {
 
     // setState(() {
     Playingbutton = true;
-    update(['PLAY_BTN']);
+    update(['MUSIC_PLAYER']);
   }
 
   @override
@@ -101,14 +101,18 @@ class HomeController extends GetxController {
     musicModelList.add(
       MusicModel(
           musicUrl: "https://luan.xyz/files/audio/nasa_on_a_mission.mp3",
-          imgUrl: "",
-          musicName: "music 1"),
+          imgUrl:
+              "https://9b16f79ca967fd0708d1-2713572fef44aa49ec323e813b06d2d9.ssl.cf2.rackcdn.com/1140x_a10-7_cTC/NS-WKMAG0730-1595944356.jpg",
+          musicName: "music 1",
+          artistName: 'Artist 1'),
     );
     musicModelList.add(
       MusicModel(
         musicUrl: "https://luan.xyz/files/audio/ambient_c_motion.mp3",
-        imgUrl: "",
+        imgUrl:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCmYtDE48C_V_awTsAL_u1-_O7_IkD94GC7KT3h84LdeqOG2U6ABbBTwPxl5vvm5MiHn0&usqp=CAU",
         musicName: "music 2",
+        artistName: 'Artist 2',
       ),
     );
   }

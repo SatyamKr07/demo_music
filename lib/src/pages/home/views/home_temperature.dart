@@ -37,7 +37,7 @@ class HomeTemperature extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: MyText(
-                      text: "^C",
+                      text: "°C",
                       fontSize: 16,
                       color: Colors.black,
                     ),
