@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audioplayers/audioplayers.dart' hide Logger;
 import 'package:demo/src/central/widgets/my_glassmorphic_container.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ class _MyMusicPlayerState extends State<MyMusicPlayer> {
   bool Playingbutton = false;
   late AudioPlayer audioplayer;
   final logger = Logger();
+  final assetsAudioPlayer = AssetsAudioPlayer();
+
   @override
   void initState() {
     super.initState();
@@ -78,7 +81,9 @@ class _MyMusicPlayerState extends State<MyMusicPlayer> {
                       // await file.writeAsBytes(
                       //     (await loadAsset()).buffer.asUint8List());
                       var result = await audioplayer.play(
-                          'https://raw.githubusercontent.com/22suraj/Music_Player/master/Main_Tumhara.mp3');
+                          'https://github.com/SatyamKr07/demo_music/blob/main/assets/music/Main_Tumhara.mp3');
+                      //  var result = await audioplayer.play(
+                      // 'https://raw.githubusercontent.com/22suraj/Music_Player/master/Main_Tumhara.mp3');
                       // var result = await audioplayer
                       //     .play('assets/music/Main_Tumhara.mp3', isLocal: true);
                       logger.d(result);
