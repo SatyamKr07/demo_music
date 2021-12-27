@@ -6,7 +6,6 @@ import 'package:demo/src/controllers/home_controller.dart';
 import 'package:demo/src/pages/home/views/electricity_usuage.dart';
 import 'package:demo/src/pages/home/views/my_music_player.dart';
 import 'package:demo/src/pages/home/views/smart_tv.dart';
-import 'package:demo/src/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +17,6 @@ class Home extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  static const routeName = '/';
   final homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
