@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audioplayers/audioplayers.dart' hide Logger;
 import 'package:demo/src/central/widgets/my_glassmorphic_container.dart';
+import 'package:demo/src/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -13,118 +15,89 @@ class MyMusicPlayer extends StatefulWidget {
 }
 
 class _MyMusicPlayerState extends State<MyMusicPlayer> {
-  bool Playingbutton = false;
-  late AudioPlayer audioplayer;
   final logger = Logger();
-  final assetsAudioPlayer = AssetsAudioPlayer();
+  final homeController = Get.find<HomeController>();
 
   @override
   void initState() {
     super.initState();
-    audioplayer = AudioPlayer();
-  }
-
-  mytoast(var message) {
-    // Fluttertoast.showToast(
-    //     msg: message,
-    //     toastLength: Toast.LENGTH_SHORT,
-    //     gravity: ToastGravity.BOTTOM,
-    //     timeInSecForIosWeb: 1,
-    //     backgroundColor: Colors.purple.shade100,
-    //     textColor: Colors.purple.shade900,
-    //     fontSize: 16.0);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MyGlassMorphicContainer(
-      start: 0.1,
-      end: 0.5,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Container(
-                // width: double.infinity,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.skip_previous,
-                    size: 45,
-                    color: Colors.purple.shade500,
+    return SizedBox(
+      width: 100,
+      child: MyGlassMorphicContainer(
+        start: 0.1,
+        end: 0.5,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  // width: double.infinity,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.skip_previous,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      homeController.handlePrevious();
+                    },
                   ),
-                  onPressed: () {
-                    logger.d('Rewind');
-                    mytoast("Currently unavailable");
-                  },
                 ),
-              ),
-              SizedBox(
-                width: 25,
-              ),
-              Container(
-                // width: double.infinity,
-                child: IconButton(
-                  icon: Icon(
-                    Playingbutton ? Icons.pause : Icons.play_arrow,
-                    size: 45,
-                    color: Colors.purple.shade500,
+                // SizedBox(
+                //   width: 5,
+                // ),
+                Container(
+                  // width: double.infinity,
+                  child: GetBuilder<HomeController>(
+                    id: "PLAY_BTN",
+                    builder: (_) {
+                      return IconButton(
+                        icon: Icon(
+                          homeController.Playingbutton
+                              ? Icons.pause
+                              : Icons.play_arrow,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                        onPressed: () async {
+                          logger.d('Play');
+                          homeController.handleMusic();
+                        },
+                      );
+                    },
                   ),
-                  onPressed: () async {
-                    logger.d('Play');
-
-                    if (Playingbutton == false) {
-                      // final file = File(
-                      //     '${(await getTemporaryDirectory()).path}/music.mp3');
-                      // await file.writeAsBytes(
-                      //     (await loadAsset()).buffer.asUint8List());
-                      var result = await audioplayer.play(
-                          'https://github.com/SatyamKr07/demo_music/blob/main/assets/music/Main_Tumhara.mp3');
-                      //  var result = await audioplayer.play(
-                      // 'https://raw.githubusercontent.com/22suraj/Music_Player/master/Main_Tumhara.mp3');
-                      // var result = await audioplayer
-                      //     .play('assets/music/Main_Tumhara.mp3', isLocal: true);
-                      logger.d(result);
-                      mytoast("Music played");
-                      setState(() {
-                        Playingbutton = true;
-                      });
-                    } else {
-                      var r = await audioplayer.pause();
-                      logger.d(r);
-                      mytoast("Music paused");
-                      setState(() {
-                        Playingbutton = false;
-                      });
-                    }
-                  },
                 ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                // width: double.infinity,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.skip_next,
-                    size: 45,
-                    color: Colors.purple.shade500,
+                // SizedBox(
+                //   width: 5,
+                // ),
+                Container(
+                  // width: double.infinity,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.skip_next,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      logger.d('Forward');
+                      homeController.handleNext();
+                    },
                   ),
-                  onPressed: () {
-                    logger.d('Forward');
-                    mytoast("Currently unavailable");
-                  },
                 ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-            ],
-          ),
-        ],
+                // SizedBox(
+                //   width: 5,
+                // ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

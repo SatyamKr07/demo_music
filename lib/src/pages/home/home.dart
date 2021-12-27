@@ -3,7 +3,9 @@ import 'package:demo/src/central/widgets/my_glassmorphic_container.dart';
 import 'package:demo/src/central/widgets/my_switch.dart';
 import 'package:demo/src/central/widgets/my_text.dart';
 import 'package:demo/src/controllers/home_controller.dart';
+import 'package:demo/src/pages/home/views/electricity_usuage.dart';
 import 'package:demo/src/pages/home/views/my_music_player.dart';
+import 'package:demo/src/pages/home/views/smart_tv.dart';
 import 'package:demo/src/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -76,7 +78,26 @@ class Home extends StatelessWidget {
                   ),
                 ],
               ),
-              MyMusicPlayer(),
+              const SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: MyMusicPlayer()),
+                  SizedBox(width: 20),
+                  Expanded(child: SmartTv()),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MyText(text: "Statistics"),
+                  MyText(text: "Month"),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              ElectricityUsuage(),
             ],
           ),
         ),

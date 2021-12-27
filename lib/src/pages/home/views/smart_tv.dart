@@ -3,8 +3,8 @@ import 'package:demo/src/central/widgets/my_switch.dart';
 import 'package:demo/src/central/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
-class PlugWall extends StatelessWidget {
-  const PlugWall({
+class SmartTv extends StatelessWidget {
+  const SmartTv({
     Key? key,
   }) : super(key: key);
 
@@ -25,7 +25,7 @@ class PlugWall extends StatelessWidget {
               children: [
                 Expanded(
                   child: MyText(
-                    text: "Plug Wall",
+                    text: "Smart Tv",
                   ),
                 ),
                 const Icon(
@@ -36,12 +36,10 @@ class PlugWall extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16.0),
-            myList(text: "Macbook Pro"),
-            const SizedBox(height: 8.0),
-            myList(text: "HomePod"),
-            const SizedBox(height: 8.0),
-            myList(text: "PlayStation 5"),
-            const SizedBox(height: 8.0),
+            MyText(
+              text: "Samsung UA55 4AC",
+              fontSize: 14,
+            ),
             MySwitch()
           ],
         ),
