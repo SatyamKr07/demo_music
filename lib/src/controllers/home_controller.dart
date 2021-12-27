@@ -11,8 +11,6 @@ class HomeController extends GetxController {
   bool Playingbutton = false;
   int currentPlayingIndex = 0;
   final logger = Logger();
-  AudioCache audioCache = AudioCache();
-  String? localAudioCacheURI;
 
   handleMusic() async {
     if (Playingbutton == false) {
@@ -24,19 +22,13 @@ class HomeController extends GetxController {
         "Playing music",
         "Have patience. Music being played from internet",
       );
-      // setState(() {
       Playingbutton = true;
       update(['MUSIC_PLAYER']);
-      // });
     } else {
       var r = await audioplayer.pause();
-      // logger.d(r);
-      // Get.snackbar("Playing paused", "");
-      // setState(() {
+
       Playingbutton = false;
       update(['MUSIC_PLAYER']);
-
-      // });
     }
   }
 
