@@ -1,5 +1,10 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'dart:io';
+
+import 'package:audioplayers/audioplayers.dart' hide Logger;
+import 'package:demo/src/central/widgets/my_glassmorphic_container.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'package:path_provider/path_provider.dart';
 
 class MyMusicPlayer extends StatefulWidget {
   @override
@@ -8,7 +13,14 @@ class MyMusicPlayer extends StatefulWidget {
 
 class _MyMusicPlayerState extends State<MyMusicPlayer> {
   bool Playingbutton = false;
-  var audioplayer = AudioPlayer();
+  late AudioPlayer audioplayer;
+  final logger = Logger();
+  @override
+  void initState() {
+    super.initState();
+    audioplayer = AudioPlayer();
+  }
+
   mytoast(var message) {
     // Fluttertoast.showToast(
     //     msg: message,
@@ -22,452 +34,90 @@ class _MyMusicPlayerState extends State<MyMusicPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return MyGlassMorphicContainer(
+      start: 0.1,
+      end: 0.5,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Container(
-                height: 250,
-                decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.purple,
-                      spreadRadius: 10,
-                      blurRadius: 100,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.elliptical(200, 70),
-                    bottomRight: Radius.elliptical(200, 70),
-                  ),
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.purple.shade900,
-                      Colors.purple.shade400,
-                    ],
-                    //begin: Alignment.topCenter,
-                  ),
-                ),
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Music Player",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 45,
-                          color: Colors.purple.shade100,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 190,
-                child: Container(
-                  height: 110,
-                  width: 110,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.purple.shade100,
-                      width: 3,
-                    ),
-                    boxShadow: const [
-                      BoxShadow(color: Colors.purple, blurRadius: 20)
-                    ],
-                    shape: BoxShape.circle,
-                    color: Colors.purple.shade100,
-                    image: DecorationImage(
-                      image: AssetImage('images/music.png'),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 30,
-                right: 10,
+                // width: double.infinity,
                 child: IconButton(
                   icon: Icon(
-                    Icons.account_circle,
-                    size: 40,
-                    color: Colors.purple.shade100,
+                    Icons.skip_previous,
+                    size: 45,
+                    color: Colors.purple.shade500,
                   ),
                   onPressed: () {
-                    print("Account");
+                    logger.d('Rewind');
                     mytoast("Currently unavailable");
                   },
                 ),
               ),
-              Positioned(
-                top: 30,
-                left: 5,
+              SizedBox(
+                width: 25,
+              ),
+              Container(
+                // width: double.infinity,
                 child: IconButton(
                   icon: Icon(
-                    Icons.dehaze,
-                    size: 40,
-                    color: Colors.purple.shade100,
+                    Playingbutton ? Icons.pause : Icons.play_arrow,
+                    size: 45,
+                    color: Colors.purple.shade500,
                   ),
-                  onPressed: () {
-                    print("More");
-                    mytoast("Currently unavailable");
-                  },
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Stack(
-            clipBehavior: Clip.none,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(left: 34, right: 34, top: 30),
-                height: 150,
-                decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.purple,
-                      spreadRadius: 5,
-                      blurRadius: 70,
-                    )
-                  ],
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.purple.shade900,
-                      Colors.purple.shade300,
-                    ],
-                    begin: Alignment.topCenter,
-                  ),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(left: 145, top: 14),
-                      // height: double.infinity,
-                      width: double.infinity,
-                      //alignment: Alignment.topRight,
-                      child: Text(
-                        "Main Tumhara",
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.purple.shade100,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 145),
-                      // height: double.infinity,
-                      width: double.infinity,
-                      //alignment: Alignment.topRight,
-                      child: Text(
-                        "Dil Bechara",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.purple.shade100,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Positioned(
-                child: Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 110),
-                  height: 115,
-                  decoration: BoxDecoration(
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.purple,
-                        spreadRadius: 5,
-                        blurRadius: 70,
-                        offset: Offset(0, 0),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.purple.shade100,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Container(
-                            // width: double.infinity,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.fast_rewind,
-                                size: 45,
-                                color: Colors.purple.shade500,
-                              ),
-                              onPressed: () {
-                                print('Rewind');
-                                mytoast("Currently unavailable");
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            width: 25,
-                          ),
-                          Container(
-                            // width: double.infinity,
-                            child: IconButton(
-                              icon: Icon(
-                                Playingbutton ? Icons.pause : Icons.play_arrow,
-                                size: 45,
-                                color: Colors.purple.shade500,
-                              ),
-                              onPressed: () async {
-                                print('Play');
+                  onPressed: () async {
+                    logger.d('Play');
 
-                                if (Playingbutton == false) {
-                                  var result = await audioplayer.play(
-                                      'https://raw.githubusercontent.com/22suraj/Music_Player/master/Main_Tumhara.mp3');
-                                  print(result);
-                                  mytoast("Music played");
-                                  setState(() {
-                                    Playingbutton = true;
-                                  });
-                                } else {
-                                  var r = await audioplayer.pause();
-                                  print(r);
-                                  mytoast("Music paused");
-                                  setState(() {
-                                    Playingbutton = false;
-                                  });
-                                }
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            // width: double.infinity,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.fast_forward,
-                                size: 45,
-                                color: Colors.purple.shade500,
-                              ),
-                              onPressed: () {
-                                print('Forward');
-                                mytoast("Currently unavailable");
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                        ],
-                      ),
-                      Container(
-                        //alignment: Alignment.center,
-                        padding: EdgeInsets.only(right: 87),
-                        // width: double.infinity,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.stop,
-                            size: 45,
-                            color: Colors.purple.shade500,
-                          ),
-                          onPressed: () async {
-                            print('Stop');
-                            var vstop = await audioplayer.stop();
-                            print(vstop);
-                            mytoast("Music stopped");
-                            setState(() {
-                              Playingbutton = false;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                    if (Playingbutton == false) {
+                      // final file = File(
+                      //     '${(await getTemporaryDirectory()).path}/music.mp3');
+                      // await file.writeAsBytes(
+                      //     (await loadAsset()).buffer.asUint8List());
+                      var result = await audioplayer.play(
+                          'https://raw.githubusercontent.com/22suraj/Music_Player/master/Main_Tumhara.mp3');
+                      // var result = await audioplayer
+                      //     .play('assets/music/Main_Tumhara.mp3', isLocal: true);
+                      logger.d(result);
+                      mytoast("Music played");
+                      setState(() {
+                        Playingbutton = true;
+                      });
+                    } else {
+                      var r = await audioplayer.pause();
+                      logger.d(r);
+                      mytoast("Music paused");
+                      setState(() {
+                        Playingbutton = false;
+                      });
+                    }
+                  },
                 ),
               ),
-              Positioned(
-                top: 75,
-                left: 39,
-                child: Container(
-                  padding: EdgeInsets.all(55),
-                  height: 135,
-                  width: 135,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.purple.shade100,
-                      width: 3,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.purple.shade100,
-                        blurRadius: 20,
-                      )
-                    ],
-                    shape: BoxShape.circle,
-                    color: Colors.purple.shade100,
-                    image: DecorationImage(
-                      image: AssetImage('images/DilBechara.jpg'),
-                    ),
+              SizedBox(
+                width: 20,
+              ),
+              Container(
+                // width: double.infinity,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.skip_next,
+                    size: 45,
+                    color: Colors.purple.shade500,
                   ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 2,
-                      ),
-                      shape: BoxShape.circle,
-                      color: Colors.purple.shade100,
-                    ),
-                  ),
+                  onPressed: () {
+                    logger.d('Forward');
+                    mytoast("Currently unavailable");
+                  },
                 ),
-              )
+              ),
+              SizedBox(
+                width: 20,
+              ),
             ],
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Container(
-            width: double.infinity,
-            height: 108,
-            decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.purple,
-                  spreadRadius: 10,
-                  blurRadius: 30,
-                  offset: Offset(1, 1),
-                ),
-              ],
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.elliptical(200, 50),
-                topRight: Radius.elliptical(200, 50),
-              ),
-              gradient: LinearGradient(
-                colors: [
-                  Colors.purple.shade900,
-                  Colors.purple.shade400,
-                ],
-                //begin: Alignment.topCenter,
-              ),
-            ),
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 29,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.headset,
-                            size: 37,
-                          ),
-                          onPressed: () {
-                            mytoast("Currently unavailable");
-                          },
-                          color: Colors.purple.shade100,
-                        ),
-                        Text(
-                          "  Playlist",
-                          style: TextStyle(
-                              color: Colors.purple.shade100, fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.file_download,
-                            size: 37,
-                          ),
-                          onPressed: () {
-                            mytoast("Currently unavailable");
-                          },
-                          color: Colors.purple.shade100,
-                        ),
-                        Text(
-                          "  Downloads",
-                          style: TextStyle(
-                              color: Colors.purple.shade100, fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.search,
-                            size: 37,
-                          ),
-                          onPressed: () {
-                            mytoast("Currently unavailable");
-                          },
-                          color: Colors.purple.shade100,
-                        ),
-                        Text(
-                          "  Search",
-                          style: TextStyle(
-                              color: Colors.purple.shade100, fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.notifications,
-                            size: 37,
-                          ),
-                          onPressed: () {
-                            mytoast("Currently unavailable");
-                          },
-                          color: Colors.purple.shade100,
-                        ),
-                        Text(
-                          "  Notification",
-                          style: TextStyle(
-                              color: Colors.purple.shade100, fontSize: 15),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            ),
           ),
         ],
       ),
